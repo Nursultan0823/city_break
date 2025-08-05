@@ -23,3 +23,31 @@ Future<List<City>> getCity()async{
     return response.headers.toString();
 
   }
+
+  Future<void> addTrip({
+  required int cityId,
+  required String personalNotes,
+  required double rating,
+  required DateTime startDate,
+  required DateTime endDate,
+}) async {
+  final body = {
+    "city_id": cityId,
+    "personalNotes": personalNotes,
+    "rating": rating,
+    "startDate": startDate.toIso8601String(),
+    "endDate": endDate.toIso8601String(),
+  };
+
+   var dio= Dio();
+   
+    var response = await dio.post(Url.addTrip.description, data: body);
+
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print('Поездка успешно добавлена');
+    } else {
+      print('Ошибка при добавлении поездки: ${response.statusCode}');
+    }
+  
+}

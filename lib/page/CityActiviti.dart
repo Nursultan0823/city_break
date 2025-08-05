@@ -26,9 +26,7 @@ void initState(){
     });
   }
 }
-      Future<void>addCity(String name,String country, String details)async{
-                  var responce=await addCity(name,country,details);
-              }
+     
   @override
     Widget build(BuildContext context){
       return Scaffold(
@@ -106,6 +104,7 @@ body: city.isEmpty
     context: context,
     builder: (context) {
       return AlertDialog(
+        scrollable: true,
         title: Text('Добавить город'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -121,6 +120,7 @@ body: city.isEmpty
             TextField(
               decoration: InputDecoration(labelText: 'Описание'),
               onChanged: (value) => details = value,
+              
             ),
           ],
         ),
@@ -132,10 +132,10 @@ body: city.isEmpty
             child: Text('Отмена'),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async{
               print('Добавлено: $country, $name, $details');
-             addCity(name, country, details);
-              loadCity();
+              await addCity(name, country, details);
+              await loadCity();
               Navigator.of(context).pop(); // Закрыть диалог
 
               
